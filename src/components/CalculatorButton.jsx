@@ -10,7 +10,7 @@ const CalculatorButton = ({
     ...props 
 }) => {
     return (
-        <Button 
+        <Button
             onClick={onClick} 
             colorScheme={colorScheme}
             variant={variant}

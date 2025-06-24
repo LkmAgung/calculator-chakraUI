@@ -1,27 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Box, Container, VStack, Grid, GridItem } from '@chakra-ui/react';
 import CalculatorDisplay from './CalculatorDisplay';
 import CalculatorButton from './CalculatorButton';
+import { 
+  appendInput, 
+  setOperation, 
+  calculate, 
+  clear 
+} from '../../redux/features/calculator/calculatorSlice';
 
 const Calculator = () => {
-    const [input, setInput] = useState('');
-    const [output, setOutput] = useState('');
+    const { input, output } = useSelector(state => state.calculator);
+    const dispatch = useDispatch();
 
     const handleButtonClick = (value) => {
-        if (value === '=') {
-            try {
-                const result = eval(input);
-                setOutput(result.toString());
-                setInput('');
-            } catch (error) {
-                setOutput('Error');
-                setInput('');
-            }
-        } else if (value === 'C') {
-            setInput('');
-            setOutput('');
-        } else {
-            setInput(input + value);
+        switch (value) {
+            case '=':
+                dispatch(calculate());
+                break;
+            case 'C':
+                dispatch(clear());
+                break;
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+                dispatch(setOperation(value));
+                break;
+            default:
+                dispatch(appendInput(value));
+                break;
         }
     };
 
