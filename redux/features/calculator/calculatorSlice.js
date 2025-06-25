@@ -20,6 +20,22 @@ const calculatorSlice = createSlice({
         state.input += action.payload;
       }
     },
+
+      toggleSign: (state) => {
+    if (state.input && state.input !== '0') {
+      if (state.input.startsWith('-')) {
+        state.input = state.input.substring(1);
+      } else {
+        state.input = '-' + state.input;
+      }
+    } else if (state.output && state.output !== '0') {
+      if (state.output.startsWith('-')) {
+        state.output = state.output.substring(1);
+      } else {
+        state.output = '-' + state.output;
+      }
+    }
+  },
     
     setOperation: (state, action) => {
       // Simpan operator saat ini
@@ -27,7 +43,14 @@ const calculatorSlice = createSlice({
       
       // Jika ada input, tambahkan operator ke string input
       if (state.input !== '') {
-        state.input += action.payload;
+
+        const lastChar = state.input.slice(-1);
+        if (['+', '-', '*', '/'].includes(lastChar)) {
+          state.input = state.input.slice(0, -1) + action.payload;
+        } else {
+          state.input += action.payload;
+        }
+
         state.calculated = false;
       } 
       // Jika ada output dari perhitungan sebelumnya
@@ -62,5 +85,5 @@ const calculatorSlice = createSlice({
   }
 });
 
-export const { appendInput, setOperation, calculate, clear } = calculatorSlice.actions;
+export const { appendInput, setOperation, toggleSign, calculate, clear } = calculatorSlice.actions;
 export default calculatorSlice.reducer;

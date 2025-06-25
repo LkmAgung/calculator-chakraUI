@@ -7,7 +7,8 @@ import {
   appendInput, 
   setOperation, 
   calculate, 
-  clear 
+  clear,
+  toggleSign
 } from '../../redux/features/calculator/calculatorSlice';
 
 const Calculator = () => {
@@ -27,6 +28,9 @@ const Calculator = () => {
             case '*':
             case '/':
                 dispatch(setOperation(value));
+                break;
+            case '+/-':
+                dispatch(toggleSign());
                 break;
             default:
                 dispatch(appendInput(value));
@@ -156,7 +160,13 @@ const Calculator = () => {
                         </GridItem>
 
                         {/* Row 5 */}
-                        <GridItem colSpan={2}>
+                        <GridItem>
+                            <CalculatorButton 
+                                label="+/-" 
+                                onClick={() => handleButtonClick('+/-')}
+                            />
+                        </GridItem>
+                        <GridItem>
                             <CalculatorButton 
                                 label="0" 
                                 onClick={() => handleButtonClick('0')} 
