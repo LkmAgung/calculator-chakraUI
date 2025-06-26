@@ -7,6 +7,7 @@ const CalculatorButton = ({
     colorScheme = "gray", 
     variant = "solid", 
     h = "60px",
+    fontSize = "xl",
     ...props 
 }) => {
     return (
@@ -17,7 +18,7 @@ const CalculatorButton = ({
             size="lg" 
             h={h}
             w="100%"
-            fontSize="xl"
+            fontSize={fontSize}
             fontWeight="bold"
             borderRadius="lg"
             _hover={{ 

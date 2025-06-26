@@ -107,6 +107,51 @@ const calculatorSlice = createSlice({
         state.previousExpression = '';
       }
     },
+
+    reciprocal: (state) => {
+      const currentValue = state.output || state.input || '0';
+      const num = Number(currentValue);
+      
+      if (num === 0) {
+        state.output = 'Error';
+        state.input = '';
+        state.previousExpression = '1/0 =';
+      } else {
+        const result = 1 / num;
+        state.previousExpression = `1/${num} =`;
+        state.output = result.toString();
+        state.input = '';
+        state.calculated = true;
+      }
+    },
+
+    square: (state) => {
+      const currentValue = state.output || state.input || '0';
+      const num = Number(currentValue);
+      const result = num * num;
+      
+      state.previousExpression = `${num}² =`;
+      state.output = result.toString();
+      state.input = '';
+      state.calculated = true;
+    },
+
+    squareRoot: (state) => {
+      const currentValue = state.output || state.input || '0';
+      const num = Number(currentValue);
+      
+      if (num < 0) {
+        state.output = 'Error';
+        state.input = '';
+        state.previousExpression = `√${num} =`;
+      } else {
+        const result = Math.sqrt(num);
+        state.previousExpression = `√${num} =`;
+        state.output = result.toString();
+        state.input = '';
+        state.calculated = true;
+      }
+    },
     
     clear: (state) => {
       state.input = '';
@@ -118,5 +163,14 @@ const calculatorSlice = createSlice({
   }
 });
 
-export const { appendInput, setOperation, toggleSign, calculate, clear } = calculatorSlice.actions;
+export const { 
+  appendInput, 
+  setOperation, 
+  toggleSign, 
+  calculate, 
+  clear,
+  reciprocal,
+  square,
+  squareRoot
+} = calculatorSlice.actions;
 export default calculatorSlice.reducer;

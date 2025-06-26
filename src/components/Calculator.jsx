@@ -8,7 +8,10 @@ import {
   setOperation, 
   calculate, 
   clear,
-  toggleSign
+  toggleSign,
+  reciprocal,
+  square,
+  squareRoot
 } from '../../redux/features/calculator/calculatorSlice';
 
 const Calculator = () => {
@@ -32,6 +35,15 @@ const Calculator = () => {
             case '+/-':
                 dispatch(toggleSign());
                 break;
+            case '1/x':
+                dispatch(reciprocal());
+                break;
+            case 'x²':
+                dispatch(square());
+                break;
+            case '√x':
+                dispatch(squareRoot());
+                break;
             default:
                 dispatch(appendInput(value));
                 break;
@@ -54,7 +66,7 @@ const Calculator = () => {
                         previousExpression={previousExpression}
                     />
                     
-                    {/* Calculator Grid - 4 columns, 5 rows */}
+                    {/* Calculator Grid - 4 columns, 6 rows */}
                     <Grid templateColumns="repeat(4, 1fr)" gap={3} w="100%">
                         {/* Row 1 */}
                         <GridItem>
@@ -86,7 +98,41 @@ const Calculator = () => {
                             />
                         </GridItem>
 
-                        {/* Row 2 */}
+                        {/* Row 2  */}
+                        <GridItem>
+                            <CalculatorButton 
+                                label="¹⁄ₓ" 
+                                onClick={() => handleButtonClick('1/x')} 
+                                colorScheme="purple"
+                                fontSize="md"
+                            />
+                        </GridItem>
+                        <GridItem>
+                            <CalculatorButton 
+                                label="x²" 
+                                onClick={() => handleButtonClick('x²')} 
+                                colorScheme="purple"
+                                fontSize="md"
+                            />
+                        </GridItem>
+                        <GridItem>
+                            <CalculatorButton 
+                                label="²√x" 
+                                onClick={() => handleButtonClick('√x')} 
+                                colorScheme="purple"
+                                fontSize="md"
+                            />
+                        </GridItem>
+                        <GridItem rowSpan={3}>
+                            <CalculatorButton 
+                                label="+" 
+                                onClick={() => handleButtonClick('+')} 
+                                colorScheme="orange"
+                                h="196px"
+                            />
+                        </GridItem>
+
+                        {/* Row 3 */}
                         <GridItem>
                             <CalculatorButton 
                                 label="7" 
@@ -105,16 +151,8 @@ const Calculator = () => {
                                 onClick={() => handleButtonClick('9')} 
                             />
                         </GridItem>
-                        <GridItem rowSpan={2}>
-                            <CalculatorButton 
-                                label="+" 
-                                onClick={() => handleButtonClick('+')} 
-                                colorScheme="orange"
-                                h="132px"
-                            />
-                        </GridItem>
 
-                        {/* Row 3 */}
+                        {/* Row 4 */}
                         <GridItem>
                             <CalculatorButton 
                                 label="4" 
@@ -134,7 +172,7 @@ const Calculator = () => {
                             />
                         </GridItem>
 
-                        {/* Row 4 */}
+                        {/* Row 5 */}
                         <GridItem>
                             <CalculatorButton 
                                 label="1" 
@@ -162,7 +200,7 @@ const Calculator = () => {
                             />
                         </GridItem>
 
-                        {/* Row 5 */}
+                        {/* Row 6 */}
                         <GridItem>
                             <CalculatorButton 
                                 label="+/-" 
