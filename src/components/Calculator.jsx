@@ -12,7 +12,7 @@ import {
 } from '../../redux/features/calculator/calculatorSlice';
 
 const Calculator = () => {
-    const { input, output } = useSelector(state => state.calculator);
+    const { input, output, previousExpression } = useSelector(state => state.calculator);
     const dispatch = useDispatch();
 
     const handleButtonClick = (value) => {
@@ -49,7 +49,10 @@ const Calculator = () => {
                 maxW="400px"
             >
                 <VStack spacing={4}>
-                    <CalculatorDisplay value={output || input || '0'} />
+                    <CalculatorDisplay 
+                        value={output || input || '0'} 
+                        previousExpression={previousExpression}
+                    />
                     
                     {/* Calculator Grid - 4 columns, 5 rows */}
                     <Grid templateColumns="repeat(4, 1fr)" gap={3} w="100%">

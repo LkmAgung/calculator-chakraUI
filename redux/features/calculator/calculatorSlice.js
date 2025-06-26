@@ -4,7 +4,8 @@ const initialState = {
   input: '',
   output: '',
   operation: null,
-  calculated: false
+  calculated: false,
+  previousExpression: ''
 };
 
 const calculatorSlice = createSlice({
@@ -17,6 +18,7 @@ const calculatorSlice = createSlice({
         state.input = action.payload;
         state.output = '';
         state.calculated = false;
+        state.previousExpression = '';
       } else {
         state.input += action.payload;
       }
@@ -64,14 +66,12 @@ const calculatorSlice = createSlice({
       state.operation = action.payload;
       
       if (state.input !== '') {
-
         const lastChar = state.input.slice(-1);
         if (['+', '-', '*', '/'].includes(lastChar)) {
           state.input = state.input.slice(0, -1) + action.payload;
         } else {
           state.input += action.payload;
         }
-
         state.calculated = false;
       } 
       // Jika ada output dari perhitungan sebelumnya
@@ -79,6 +79,7 @@ const calculatorSlice = createSlice({
         state.input = state.output + action.payload;
         state.output = '';
         state.calculated = false;
+        state.previousExpression = '';
       }
     },
     
@@ -87,6 +88,15 @@ const calculatorSlice = createSlice({
         // Use Function constructor instead of eval for better security
         // eslint-disable-next-line no-new-func
         const result = new Function('return ' + state.input)();
+        
+        // Format expression for display (replace operators with symbols)
+        const formattedExpression = state.input
+          .replace(/\*/g, ' × ')
+          .replace(/\//g, ' ÷ ')
+          .replace(/\+/g, ' + ')
+          .replace(/\-/g, ' - ');
+        
+        state.previousExpression = formattedExpression + ' =';
         state.output = result.toString();
         state.input = '';
         state.calculated = true;
@@ -94,6 +104,7 @@ const calculatorSlice = createSlice({
         state.output = 'Error';
         state.input = '';
         state.calculated = true;
+        state.previousExpression = '';
       }
     },
     
@@ -102,6 +113,7 @@ const calculatorSlice = createSlice({
       state.output = '';
       state.operation = null;
       state.calculated = false;
+      state.previousExpression = '';
     }
   }
 });
