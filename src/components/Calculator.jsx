@@ -90,15 +90,16 @@ const Calculator = () => {
                                 colorScheme="orange"
                             />
                         </GridItem>
-                        <GridItem>
+                        <GridItem rowSpan={2}>
                             <CalculatorButton 
                                 label="-" 
                                 onClick={() => handleButtonClick('-')} 
                                 colorScheme="orange"
+                                h="132px"
                             />
                         </GridItem>
 
-                        {/* Row 2  */}
+                        {/* Row 2 */}
                         <GridItem>
                             <CalculatorButton 
                                 label="¹⁄ₓ" 
@@ -123,14 +124,6 @@ const Calculator = () => {
                                 fontSize="md"
                             />
                         </GridItem>
-                        <GridItem rowSpan={3}>
-                            <CalculatorButton 
-                                label="+" 
-                                onClick={() => handleButtonClick('+')} 
-                                colorScheme="orange"
-                                h="196px"
-                            />
-                        </GridItem>
 
                         {/* Row 3 */}
                         <GridItem>
@@ -149,6 +142,14 @@ const Calculator = () => {
                             <CalculatorButton 
                                 label="9" 
                                 onClick={() => handleButtonClick('9')} 
+                            />
+                        </GridItem>
+                        <GridItem rowSpan={2}>
+                            <CalculatorButton 
+                                label="+" 
+                                onClick={() => handleButtonClick('+')} 
+                                colorScheme="orange"
+                                h="132px"
                             />
                         </GridItem>
 
