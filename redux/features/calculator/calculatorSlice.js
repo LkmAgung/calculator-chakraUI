@@ -15,33 +15,54 @@ const calculatorSlice = createSlice({
       // Reset input if we just calculated a result and start a new number
       if (state.calculated) {
         state.input = action.payload;
+        state.output = '';
         state.calculated = false;
       } else {
         state.input += action.payload;
       }
     },
-
-      toggleSign: (state) => {
-    if (state.input && state.input !== '0') {
-      if (state.input.startsWith('-')) {
-        state.input = state.input.substring(1);
-      } else {
-        state.input = '-' + state.input;
+    
+    toggleSign: (state) => {
+      // For input state
+      if (state.input) {
+        // Parse the expression to find the last number
+        const regex = /([+\-*/]?)(\-?\d+\.?\d*)$/;
+        const match = state.input.match(regex);
+        
+        if (match) {
+          const [fullMatch, operator, number] = match;
+          const startPos = state.input.length - fullMatch.length;
+          const beforeMatch = state.input.substring(0, startPos);
+          
+          // Toggle the sign of the number
+          const numValue = Number(number);
+          const toggledNumber = numValue * -1;
+          
+          // Reconstruct the expression - without explicit '+' for positive numbers
+          if (operator && operator !== '-') {
+            // If there's a non-minus operator before the number
+            state.input = beforeMatch + operator + (toggledNumber < 0 ? toggledNumber : Math.abs(toggledNumber));
+          } else if (operator === '-') {
+            if (beforeMatch === '') {
+              state.input = Math.abs(toggledNumber).toString();
+            } else {
+              state.input = beforeMatch + '+' + Math.abs(toggledNumber);
+            }
+          } else {
+            state.input = beforeMatch + (toggledNumber < 0 ? toggledNumber : Math.abs(toggledNumber));
+          }
+        }
       }
-    } else if (state.output && state.output !== '0') {
-      if (state.output.startsWith('-')) {
-        state.output = state.output.substring(1);
-      } else {
-        state.output = '-' + state.output;
+      // For output state (result of previous calculation)
+      else if (state.output && state.output !== '0') {
+        const numValue = Number(state.output);
+        state.output = (numValue * -1).toString();
       }
-    }
-  },
+    },
     
     setOperation: (state, action) => {
-      // Simpan operator saat ini
       state.operation = action.payload;
       
-      // Jika ada input, tambahkan operator ke string input
       if (state.input !== '') {
 
         const lastChar = state.input.slice(-1);
