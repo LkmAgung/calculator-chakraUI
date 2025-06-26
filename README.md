@@ -8,31 +8,6 @@ This is a simple calculator application built using Next.js and Chakra UI. The a
 - Responsive design using Chakra UI.
 - Clean and intuitive user interface.
 
-## Project Structure
-
-```
-calculator-app
-├── public
-│   └── favicon.ico
-├── src
-│   ├── components
-│   │   ├── Calculator.jsx
-│   │   ├── CalculatorButton.jsx
-│   │   └── CalculatorDisplay.jsx
-│   ├── pages
-│   │   ├── _app.js
-│   │   ├── _document.js
-│   │   └── index.js
-│   ├── styles
-│   │   └── globals.css
-│   └── theme
-│       └── index.js
-├── .eslintrc.json
-├── .gitignore
-├── next.config.js
-└── package.json
-```
-
 ## Getting Started
 
 To get started with the project, follow these steps:
